@@ -51,8 +51,11 @@ export default {
   }),
   methods: {
     login() {
+      const baseUrl =
+        (window.openpaas && window.openpaas.OPENPAAS_API_URL) || "";
+
       post(
-        "/api/login",
+        `${baseUrl}/api/login`,
         {
           username: this.username,
           password: this.password,
