@@ -7,7 +7,7 @@
             <v-toolbar-title>OpenPaaS Login</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
+            <v-form id="login-form" @submit.prevent="login">
               <v-text-field
                 label="Username"
                 name="username"
@@ -28,7 +28,11 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="login">Login</v-btn>
+            <v-btn
+              type="submit"
+              color="primary"
+              form="login-form"
+            >Login</v-btn>
             <v-btn>Cancel</v-btn>
           </v-card-actions>
         </v-card>
