@@ -28,11 +28,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              type="submit"
-              color="primary"
-              form="login-form"
-            >Login</v-btn>
+            <v-btn type="submit" color="primary" form="login-form">Login</v-btn>
             <v-btn>Cancel</v-btn>
           </v-card-actions>
         </v-card>
@@ -50,27 +46,33 @@ export default {
     password: null
   }),
   methods: {
-    login() {
+    getRedirectTo() {
+      const uri = window.location.search.substring(1);
+      const params = new URLSearchParams(uri);
+      return params.get("continue");
+    },
+
+    async login() {
       const baseUrl =
         (window.openpaas && window.openpaas.OPENPAAS_API_URL) || "";
 
-      post(
-        `${baseUrl}/api/login`,
-        {
-          username: this.username,
-          password: this.password,
-          rememberme: "false"
-        },
-        {
-          withCredentials: true
-        }
-      )
-        .then(() => {
-          window.location = `/${window.location.hash}`;
-        })
-        .catch(err => {
-          console.log("Error on login", err);
-        });
+      try {
+        await post(
+          `${baseUrl}/api/login`,
+          {
+            username: this.username,
+            password: this.password,
+            rememberme: "false"
+          },
+          {
+            withCredentials: true
+          }
+        );
+
+        window.location = this.getRedirectTo();
+      } catch (err) {
+        console.log("Error on login", err);
+      }
     }
   }
 };
