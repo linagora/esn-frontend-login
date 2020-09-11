@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Install packages & Lint') {
       agent {
-        dockerfile {
+        docker {
           image 'node:10-buster'
         }
       }
