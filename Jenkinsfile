@@ -10,7 +10,7 @@ pipeline {
       }
 
       steps {
-        sh 'npm install'
+        sh 'npm install -f'
         sh 'npm run lint'
       }
     }
